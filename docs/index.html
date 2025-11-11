@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DigiData • Training and Evaluating General-Purpose Mobile Control Agents</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* You can move these into your style.css */
+    .author-list {
+  text-align: center;
+  margin-top: 0.5em;
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 800px;      /* Set your desired max width */
+  margin-left: auto;     /* Center horizontally */
+  margin-right: auto;    /* Center horizontally */
+  width: 100%;           /* Optional: ensures it doesn't exceed parent width */
+}
+    .author-list span {
+      display: inline-block;
+      margin: 0 0.5em;
+    }
+    .section-intro {
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin-bottom: 2em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DigiData</h1>
+    <p>Training and Evaluating General-Purpose Mobile Control Agents</p>
+    <div class="author-list">
+        <span><a href="https://www.linkedin.com/in/yuxuans/">Yuxuan Sun</a><sup>1</sup><sup>*</sup></span>
+        <span>Manchen Wang<sup>1</sup><sup>*</sup></span>
+        <span><a href="https://jasonqsy.github.io/">Shengyi Qian</a><sup>1</sup><sup>*</sup></span>
+        <span>William R. Wong<sup>1</sup><sup>*</sup></span>
+        <span>Eric Gan<sup>1</sup><sup>*</sup></span>
+        <span><a href="https://proceduralia.github.io/">Pierluca D'Oro</a><sup>1</sup><sup>*</sup></span>
+        <span><a href="https://www.linkedin.com/in/castillejoalejandro/">Alejandro Castillejo Munoz</a><sup>1</sup><sup>*</sup></span>
+        <span>Sneha Silwal<sup>1</sup></span>
+        <span><a href="https://pmatias.xyz/">Pedro Matias</a><sup>2</sup></span>
+        <span><a href="https://nitinkamra1992.github.io/">Nitin Kamra</a><sup>2</sup></span>
+        <span><a href="https://satwikkottur.github.io/">Satwik Kottur</a><sup>1</sup></span>
+        <span>Nick Raines<sup>2</sup></span>
+        <span><a href="https://www.linkedin.com/in/xuanyi-fidel-zhao/?locale=en_US">Xuanyi Zhao</a><sup>1</sup></span>
+        <span><a href="https://www.linkedin.com/in/qiongjoychen/">Joy Chen</a><sup>1</sup></span>
+        <span>Joseph Greer<sup>1</sup></span>
+        <span><a href="https://andreamad8.github.io/">Andrea Madotto</a><sup>1</sup></span>
+        <span>Allen Bolourchi<sup>1,</sup><sup>3</sup></span>
+        <span>James Valori<sup>1</sup></span>
+        <span><a href="https://kevintcarlberg.net/">Kevin Carlberg</a><sup>2</sup></span>
+        <span><a href="https://www.linkedin.com/in/karl-ridgeway-5a662634/">Karl Ridgeway</a><sup>2</sup><sup>†</sup></span>
+        <span><a href="https://jovapo.github.io/">Joseph Tighe</a><sup>1</sup><sup>†</sup></span><br>
+      <span><sup>1</sup>FAIR at Meta, <sup>2</sup>Meta Reality Labs Research, <sup>3</sup>University of Southern California</span><br>
+      <span><sup>*</sup>Core contribution, <sup>†</sup>Project supervision</span>
+    </div>
+    <nav>
+      <a href="#abstract">Abstract</a>
+      <a href="#dataset">Dataset</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#results">Results</a>
+      <a href="#links">Resources</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="abstract">
+      <h2>Abstract</h2>
+      <p>AI agents capable of controlling user interfaces have the potential to transform human interaction with digital devices. To accelerate this transformation, two fundamental building blocks are essential: high-quality datasets that enable agents to achieve complex and human-relevant goals, and robust evaluation methods that allow researchers and practitioners to rapidly enhance agent performance. In this paper, we introduce <b>DigiData</b>, a large-scale, high-quality, diverse, multi-modal dataset designed for training mobile control agents. Unlike existing datasets, which derive goals from unstructured interactions, DigiData is meticulously constructed through comprehensive exploration of app features, resulting in greater diversity and higher goal complexity. Additionally, we present <b>DigiData-Bench</b>, a benchmark for evaluating mobile control agents on real-world complex tasks. We demonstrate that the commonly used step-accuracy metric falls short in reliably assessing mobile control agents and, to address this, we propose dynamic evaluation protocols and AI-powered evaluations as rigorous alternatives for agent assessment. Our contributions aim to significantly advance the development of mobile control agents, paving the way for more intuitive and effective human-device interactions.</p>
+    </section>
+
+    <section id="dataset">
+      <h2>Dataset</h2>
+      <div class="section-intro">
+        <p>DigiData is a dataset designed to offer diverse and high-quality data to train mobile control agents. Differently from existing datasets, DigiData is created using a data collection protocol that attempts to comprehensively cover all app features, while simultaneously ensuring high data quality.</p>
+      </div>
+
+      <h3>Dataset Characteristics</h3>
+      <div style="display: flex; justify-content: center; align-items: flex-start; gap: 1em;">
+        <img src="assets/trajectory_distribution_barplot.png" alt="Trajectory distribution barplot" style="max-width: 50%; height: auto; width: 400px;" />
+        <img src="assets/pairwise_cosine_distance.png" alt="Pairwise cosine distance" style="max-width: 50%; height: auto; width: 400px;" />
+      </div>
+      <p style="text-align: center; color: #666; margin-top: 0.5em; margin-bottom: 2em;"><b>Left: </b>Percentage of data distribution for DigiData's top apps. The dataset presents no major imbalance towards specific apps. <b>Right: </b>Comparison of distribution of pairwise cosine distances across datasets. DigiData exhibits the largest degree of goal diversity, especially compared to AitW.</p>
+
+      <h3>Data Collection Pipeline</h3>
+        <img src="assets/data_collectionv1.png" alt="Data collection v1" style="max-width: 100%; height: auto; width: 800px; display: block; margin: 1em auto 0.5em;" />
+        <p style="text-align: center; color: #666; margin-top: 0.5em; margin-bottom: 2em;">A representation of our data collection pipeline. For each app, our pipeline includes three phases. In the first phase (goal curation), human workers exhaustively explore the app and curate a list of goals that attempts to cover all of its features. In the second phase (demonstrations collection), human annotators create a set of demonstrations, generating trajectories that achieve the specified goals. In the third phase (trajectory verification), trajectories that do not achieve their corresponding goal are filtered out of the dataset, by a verification system based on a combination of LLMs and humans. Overall, this pipeline allows to collect in-depth and high-quality mobile control data.</p>
+
+      <h3>Comparison with Existing Datasets</h3>
+      <img src="assets/dataset_stats_wide.png" alt="Related work" style="max-width: 100%; height: auto; width: 800px; display: block; margin: 1em auto 0.5em;" />
+      <p style="text-align: center; color: #666; margin-top: 0.5em; margin-bottom: 2em;">Visualization of different features of existing mobile control datasets. DigiData constitutes a step change in terms of goal depth, being the first large-scale dataset obtained by comprehensive exploration of the functionalities of mobile device apps.</p>
+    </section>
+
+    <section id="benchmark">
+      <h2>Benchmark</h2>
+      <div class="section-intro">
+        <p>DigiData-Bench evaluates mobile control agents through two complementary approaches: <strong>offline evaluation</strong> using step-accuracy on 309 tasks with ground truth demonstrations, and <strong>online evaluation</strong> in live environments with the same task set, including 150+ fully automated scenarios through DigiData-Bench-Auto.</p>
+      </div>
+      <h3>Task Statistics & Distribution</h3>
+      <img src="assets/app_diversity.png" alt="App Diversity" style="max-width: 100%; height: auto; width: 800px; display: block; margin: 1em auto 0.5em;" />
+      <p style="text-align: center; color: #666; margin-top: 0.5em; margin-bottom: 2em;">DigiData-Bench comprises 309 goals across 37 Android apps spanning 8 categories: Communications, Food, Management, Media, Navigation, Restricted Search, Shopping, and Misfit.</p>
+      <h3>Offline Evaluation</h3>
+      <p style="margin-bottom: 1em;">Offline evaluation uses ground truth demonstration trajectories to assess agent performance without requiring live environment execution. Agents are evaluated step-by-step against reference interaction traces, where each predicted action is compared to the corresponding ground truth action from human demonstrations.</p>
+      <img src="assets/traj_vis_1.png" alt="Trajectory vis 1" style="max-width: 100%; height: auto; width: 1000px; display: block; margin: 1em auto 0.5em; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" />
+      <p style="text-align: center; color: #666; margin-top: 0.5em; margin-bottom: 2em;"><strong>Goal:</strong> Using Gallery (Google) app, create a new folder named "Mountains" and move the most recently taken photo of a mountain landscape into it.</p>
+      <h3>Online Dynamic Evaluation</h3>
+      <p style="margin-bottom: 1em;">Our online evaluation protocol assesses true task completion in live Android environments. Human evaluators monitor agent execution for safety while judging overall success. DigiData-Bench-Auto automates this process for 150+ tasks using LLM judges, enabling scalable evaluation without human oversight.</p>
+      <img src="assets/benchmarkingv1.png" alt="Online evaluation protocol" style="max-width: 100%; height: auto; width: 800px; display: block; margin: 1em auto 0.5em;" />
+      <p style="text-align: center; color: #666; margin-top: 0.5em; margin-bottom: 2em;">A visual representation of our online evaluation protocol. Human workers initialize app states, monitor agent execution, and assess task completion success in live environments.</p>
+    </section>
+
+    <section id="results">
+      <h2>Key Results</h2>
+      <div class="section-intro">
+        <p>Our experiments demonstrate that agents trained on DigiData achieve superior performance compared to those trained on existing datasets, with our best model reaching 47.3% task success rate on DigiData-Bench. Importantly, we show that Chain-of-Thought data significantly improves both performance and explainability, while highlighting fundamental limitations of step-accuracy metrics for mobile control evaluation.</p>
+      </div>
+      
+      <div style="overflow-x: auto; margin: 2em 0;">
+        <table style="width: 90%; border-collapse: collapse; font-size: 0.9em; margin: 0 auto;">
+          <thead>
+            <tr style="border-bottom: 2px solid #333;">
+              <th style="text-align: left; padding: 8px; border-bottom: 1px solid #666;"></th>
+              <th colspan="4" style="text-align: center; padding: 8px; border-bottom: 1px solid #666;">Step-accuracy</th>
+              <th colspan="5" style="text-align: center; padding: 8px; border-bottom: 1px solid #666;">Success Rate (DigiData-Bench)</th>
+            </tr>
+            <tr style="border-bottom: 1px solid #666;">
+              <th style="text-align: left; padding: 8px;"></th>
+              <th style="text-align: center; padding: 8px;">DigiData-Bench</th>
+              <th style="text-align: center; padding: 8px;">AitW</th>
+              <th style="text-align: center; padding: 8px;">ACtrl(H)</th>
+              <th style="text-align: center; padding: 8px;">ACtrl(L)</th>
+              <th style="text-align: center; padding: 8px;">All</th>
+              <th style="text-align: center; padding: 8px;">Seen</th>
+              <th style="text-align: center; padding: 8px;">Familiar</th>
+              <th style="text-align: center; padding: 8px;">Novel</th>
+              <th style="text-align: center; padding: 8px;">All (LLM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 8px;">GPT4o</td>
+              <td style="text-align: center; padding: 8px;">40.0</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">27.8</td>
+              <td style="text-align: center; padding: 8px;">26.7</td>
+              <td style="text-align: center; padding: 8px;">33.3</td>
+              <td style="text-align: center; padding: 8px;">26.5</td>
+              <td style="text-align: center; padding: 8px;">38.0</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ccc;">
+              <td style="padding: 8px;">Qwen2.5VL</td>
+              <td style="text-align: center; padding: 8px;">49.2</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">39.2</td>
+              <td style="text-align: center; padding: 8px;">37.9</td>
+              <td style="text-align: center; padding: 8px;">42.6</td>
+              <td style="text-align: center; padding: 8px;">40.8</td>
+              <td style="text-align: center; padding: 8px;">46.2</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px;">AitW</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">73.1</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px;">AndroidControl</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px; font-weight: bold;">71.5</td>
+              <td style="text-align: center; padding: 8px; font-weight: bold;">86.6</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ccc;">
+              <td style="padding: 8px;">CogAgent</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">76.8</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+              <td style="text-align: center; padding: 8px;">-</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px;">Ours 1B</td>
+              <td style="text-align: center; padding: 8px;">67.6</td>
+              <td style="text-align: center; padding: 8px;">77.4</td>
+              <td style="text-align: center; padding: 8px;">64.1</td>
+              <td style="text-align: center; padding: 8px;">78.5</td>
+              <td style="text-align: center; padding: 8px;">35.0</td>
+              <td style="text-align: center; padding: 8px;">38.4</td>
+              <td style="text-align: center; padding: 8px;">37.0</td>
+              <td style="text-align: center; padding: 8px;">18.4</td>
+              <td style="text-align: center; padding: 8px;">37.7</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px;">Ours 3B</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">70.7</td>
+              <td style="text-align: center; padding: 8px;">78.0</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">65.3</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">82.1</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">44.3</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">49.5</td>
+              <td style="text-align: center; padding: 8px; font-weight: bold;">46.3</td>
+              <td style="text-align: center; padding: 8px;">20.4</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">49.8</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px;">Ours 8B</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">70.7</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">78.1</td>
+              <td style="text-align: center; padding: 8px;">64.1</td>
+              <td style="text-align: center; padding: 8px;">81.4</td>
+              <td style="text-align: center; padding: 8px;">42.1</td>
+              <td style="text-align: center; padding: 8px;">45.2</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">44.4</td>
+              <td style="text-align: center; padding: 8px; text-decoration: underline;">26.5</td>
+              <td style="text-align: center; padding: 8px;">48.5</td>
+            </tr>
+            <tr style="border-bottom: 2px solid #333;">
+              <td style="padding: 8px;">Ours 8B COT</td>
+              <td style="text-align: center; padding: 8px; font-weight: bold;">72.8</td>
+              <td style="text-align: center; padding: 8px; font-weight: bold;">78.7</td>
+              <td style="text-align: center; padding: 8px;">63.8</td>
+              <td style="text-align: center; padding: 8px;">77.8</td>
+              <td style="text-align: center; padding: 8px; font-weight: bold;">47.3</td>
+              <td style="text-align: center; padding: 8px; font-weight: bold;">51.0</td>
+              <td style="text-align: center; padding: 8px;">42.6</td>
+              <td style="text-align: center; padding: 8px; font-weight: bold;">36.7</td>
+              <td style="text-align: center; padding: 8px; font-weight: bold;">53.6</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <p style="text-align: center; color: #666; margin-top: 1em; font-size: 0.9em;">
+        Comparison of step-accuracy across different datasets and success rate on DigiData-Bench. ACtrl(H) and ACtrl(L) refer to high-level and low-level tasks from Android Control's test set, while success rate on DigiData-Bench is reported on three app novelty subsets. All (LLM) reports success rate from GPT4o as a judge model. Ours 8B COT has the highest success rate on DigiData-Bench from both human evals and LLM judge showing the effectiveness of our DigiData and the synthetic COT data.
+      </p>
+    </section>
+
+    <section id="links">
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2511.07413">📄 Paper</a></li>
+        <li><a href="https://github.com/facebookresearch/DigiData">💻 Code</a></li>
+        <li>📊 Dataset (Coming Soon)</li>
+      </ul>
+    </section>
+
+    <section id="bibtex">
+      <h2>BibTeX</h2>
+      <pre><code>@misc{sun2025digidatatrainingevaluatinggeneralpurpose,
+  title         = {DigiData: Training and Evaluating General-Purpose Mobile Control Agents}, 
+  author        = {Yuxuan Sun and Manchen Wang and Shengyi Qian and William R. Wong and Eric Gan and Pierluca D'Oro and Alejandro Castillejo Munoz and Sneha Silwal and Pedro Matias and Nitin Kamra and Satwik Kottur and Nick Raines and Xuanyi Zhao and Joy Chen and Joseph Greer and Andrea Madotto and Allen Bolourchi and James Valori and Kevin Carlberg and Karl Ridgeway and Joseph Tighe},
+  year          = {2025},
+  eprint        = {2511.07413},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2511.07413}, 
+}</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Meta · DigiData
+  </footer>
+</body>
+</html>
