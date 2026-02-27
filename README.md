@@ -11,13 +11,15 @@ This repo is the home to DigiData paper.
 > [Running DigiData-Bench](#running-digidata-bench)
 
 ## Updates 
+
+* **[Feb-27-26]:** DigiData dataset is released on Hugging Face: https://huggingface.co/datasets/facebook/DigiData
 * **[Nov-10-25]:** DigiData [paper](https://arxiv.org/abs/2511.07413) is released. :fire::fire:
 
 ## Dataset Release
 
 [![Dataset License](https://img.shields.io/badge/Dataset_License-CC_BY_4.0-olive)](https://creativecommons.org/licenses/by/4.0/)
 
-Coming soon...
+The DigiData dataset is available on Hugging Face: https://huggingface.co/datasets/facebook/DigiData
 
 ## Running DigiData-Bench
 
